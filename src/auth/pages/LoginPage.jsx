@@ -7,6 +7,11 @@ import { useForm } from "../../hooks";
 import { useDispatch, useSelector } from "react-redux";
 import { checkingAuthentication, startGoogleSingIn, startSingInWithEmailAndPassword } from "../../store/auth";
 
+const formData = {
+  email: '',
+  password: '',
+};
+
 export const LoginPage = () => {
 
   const dispatch = useDispatch();
@@ -15,14 +20,10 @@ export const LoginPage = () => {
   const {status, errorMessage} = useSelector((state) => state.auth);
   const isAuthenticating = useMemo( () => status === 'checking', [status]);
 
-  const {email, password, onInputChange, formState} = useForm({
-    email: '',
-    password: '',
-  });
+  const {email, password, onInputChange, formState} = useForm(formData);
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log(email, password);
     //dispatch(checkingAuthentication(email, password));
     dispatch(startSingInWithEmailAndPassword(formState));
   }
